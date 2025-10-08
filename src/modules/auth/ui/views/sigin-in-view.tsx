@@ -4,6 +4,7 @@ import { email, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OctagonAlertIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 
 import { authClient } from "@/lib/auth-client";
 import { Alert, AlertTitle } from "@/components/ui/alert";
@@ -48,6 +49,7 @@ export const SignInView = () => {
       {
         email: data.email,
         password: data.password,
+        callbackURL: "/",
       },
       {
         onSuccess: () => {
@@ -56,6 +58,28 @@ export const SignInView = () => {
         },
 
         onError: ({ error }) => {
+          setError(error.message);
+        },
+      }
+    );
+  };
+
+  const onSocial = (provider: "github" | "google") => {
+    setError(null);
+    setPending(true);
+
+    authClient.signIn.social(
+      {
+        provider: provider, //provider as prop
+        callbackURL: "/",
+      },
+      {
+        onSuccess: () => {
+          setPending(false);
+        },
+
+        onError: ({ error }) => {
+          setPending(false);
           setError(error.message);
         },
       }
@@ -136,11 +160,25 @@ export const SignInView = () => {
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <Button variant="outline" type="button" className="w-full">
+                  <Button
+                    disabled={pending}
+                    onClick={() => onSocial("google")}
+                    variant="outline"
+                    type="button"
+                    className="w-full flex items-center gap-2"
+                  >
+                    <FaGoogle className="h-4 w-4" />
                     Google
                   </Button>
 
-                  <Button variant="outline" type="button" className="w-full">
+                  <Button
+                    disabled={pending}
+                    onClick={() => onSocial("github")}
+                    variant="outline"
+                    type="button"
+                    className="w-full flex items-center gap-2"
+                  >
+                    <FaGithub className="h-4 w-4" />
                     Github
                   </Button>
                 </div>
