@@ -45,7 +45,7 @@ export const DashBoardSidebar = () => {
   const pathname = usePathname();
 
   return (
-    <Sidebar className="flex flex-col">
+    <Sidebar>
       {/* Header */}
       <SidebarHeader className="text-sidebar-accent-foreground">
         <Link href="/" className="flex items-center gap-2 px-2 pt-2">
