@@ -11,7 +11,11 @@ export const AgentsView = () => {
 
     return (
         <div>
+          
+               
+           
             {JSON.stringify(data, null, 2)}
+            
         </div>
     )
 
