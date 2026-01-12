@@ -1,4 +1,4 @@
-import { Title } from "@radix-ui/react-dialog";
+
 import { AlertCircleIcon } from "lucide-react";
 
 interface Props {
